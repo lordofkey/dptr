@@ -54,7 +54,7 @@ def extract_images(filename):
   with open(filename) as bytestream:
     buf = bytestream.read(640*400*4)
     data = numpy.frombuffer(buf, dtype=numpy.float32)
-    data = data.reshape(200, 640, 1)
+    data = data.reshape(400, 640, 1, 1)
     return data
 
 
@@ -178,23 +178,23 @@ def read_data_sets(train_dir, fake_data=False, one_hot=False, dtype=tf.float32):
   TEST_LABELS = 'trt.label'
   VALIDATION_SIZE = 5000
 
-  local_file = TRAIN_IMAGES
+  local_file = train_dir+TRAIN_IMAGES
   train_images = extract_images(local_file)
-  local_file = TRAIN_LABELS
+  local_file = train_dir+TRAIN_LABELS
   train_labels = extract_labels(local_file, one_hot=one_hot)
-  local_file = TEST_IMAGES
+  local_file = train_dir+TEST_IMAGES
   test_images = extract_images(local_file)
-  local_file = TEST_LABELS
+  local_file = train_dir+TEST_LABELS
   test_labels = extract_labels(local_file, one_hot=one_hot)
 
-  validation_images = train_images[:VALIDATION_SIZE]
-  validation_labels = train_labels[:VALIDATION_SIZE]
-  train_images = train_images[VALIDATION_SIZE:]
-  train_labels = train_labels[VALIDATION_SIZE:]
+#  validation_images = train_images[:VALIDATION_SIZE]
+#  validation_labels = train_labels[:VALIDATION_SIZE]
+#  train_images = train_images[VALIDATION_SIZE:]
+#  train_labels = train_labels[VALIDATION_SIZE:]
 
   data_sets.train = DataSet(train_images, train_labels, dtype=dtype)
-  data_sets.validation = DataSet(validation_images, validation_labels,
-                                 dtype=dtype)
+#  data_sets.validation = DataSet(validation_images, validation_labels,
+#                                 dtype=dtype)
   data_sets.test = DataSet(test_images, test_labels, dtype=dtype)
 
   return data_sets

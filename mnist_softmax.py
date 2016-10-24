@@ -27,13 +27,13 @@ from __future__ import print_function
 import input_data
 import tensorflow as tf
 
-mnist = input_data.read_data_sets("Mnist_data/", one_hot=True)
+mnist = input_data.read_data_sets("trdata/", one_hot=True)
 
 sess = tf.InteractiveSession()
 
 # Create the model
-x = tf.placeholder(tf.float32, [None, 784])
-W = tf.Variable(tf.zeros([784, 10]))
+x = tf.placeholder(tf.float32, [None, 640])
+W = tf.Variable(tf.zeros([640, 10]))
 b = tf.Variable(tf.zeros([10]))
 y = tf.nn.softmax(tf.matmul(x, W) + b)
 
